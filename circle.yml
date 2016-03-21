@@ -1,0 +1,27 @@
+dependencies:
+    pre:
+        - go get -u github.com/fzipp/gocyclo
+        - go get -u github.com/client9/misspell/cmd/misspell
+        - go get -u github.com/golang/lint/golint
+        - go get -u github.com/mibk/dupl
+        - go get -u github.com/kisielk/errcheck
+        - go get -u github.com/mvdan/interfacer/cmd/interfacer
+        - go get -u github.com/mdempsky/unconvert
+        - go get -u github.com/jgautheron/goconst/cmd/goconst
+        - go get -u github.com/jgautheron/usedexports
+test:
+    pre:
+        - find . -name \*.go | xargs go tool vet -all
+        - find . -name \*.go | xargs go tool vet --shadow
+        - find . -name \*.go | xargs gofmt -l -s -d -e
+        - find . -name \*.go | xargs gocyclo -over 10 
+        - find . -type f -name "*.*" | grep -v '.git' | xargs misspell
+        - golint ./...
+        - find . -name "*.go" -not -name "*_test*" | dupl -files -v -t 50
+        - find . -type d | grep -v '.git' | xargs errcheck -asserts -blank -verbose
+        - find . -type d | grep -v '.git' | xargs interfacer -v
+        - find . -type d | grep -v '.git' | xargs unconvert -v -safe
+        - goconst ./...
+        - usedexports ./...
+
+
