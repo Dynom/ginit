@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/Dynom/ginit/tree/master.svg?style=shield)](https://circleci.com/gh/Dynom/ginit) [![Go Report Card](https://goreportcard.com/badge/github.com/Dynom/ginit)](https://goreportcard.com/report/github.com/Dynom/ginit)
+
 # Introduction
 
 ginit is a small signal proxy init program that solves the "Docker pid 1" problem.
