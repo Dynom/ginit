@@ -25,16 +25,19 @@ It should work fine on most linux distributions, but it's thoroughly tested and 
 
 # More information
 
-## What does it support?
+## When should I use it?
+Whenever you run a single application (not deamon) within a Docker container, which is typically so when you follow the [12 factor application design approach](http://12factor.net/). Applications that spawn daemons, like Postgresql for example, have mechanisms to handle the child-process reaping problems themselves.
+
+## What does ginit support?
 It's designed to support only one program (child) to launch. To call ginit a real init replacement system is therefor stretching it's  definition.
 
-## Docker pid 1 problem?
+## The Docker pid 1 problem?
 A thorough write-up can be found here: https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
 
 ## Is this the only solution?
 Far from it, many initiatives have been made to write a small signal-proxy-wrapper. Most of them contain more features and may do other things you're looking for. To name a few:
 
-* https://github.com/krallin/tini (C)
-* https://github.com/Yelp/dumb-init (C)
-* https://github.com/rciorba/pidunu (C)
-* https://github.com/ohjames/smell-baron (C)
+* https://github.com/krallin/tini (language: C)
+* https://github.com/Yelp/dumb-init (language: C)
+* https://github.com/rciorba/pidunu (language: C)
+* https://github.com/ohjames/smell-baron (language: C)
