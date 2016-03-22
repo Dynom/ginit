@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -27,7 +28,8 @@ func main() {
 		os.Exit(-1)
 	}
 
-	cmd := createCommand(os.Args)
+	cmd := createCommand(os.Args, os.Stdin, os.Stdout, os.Stderr)
+
 	err := cmd.Start()
 	if err != nil {
 		printf("Couldn't start command: %s", err)
@@ -42,8 +44,6 @@ func main() {
 		if err != nil {
 			printf("Unable to send signal '%s' to our child process: %s", sig, err)
 		}
-
-		debugf("Signal sent", cmd.ProcessState.Exited())
 	}()
 
 	debugf("Command started with pid %d.", cmd.Process.Pid)
@@ -62,13 +62,17 @@ func registerSignals(sigs chan<- os.Signal) {
 	)
 }
 
-func createCommand(argv []string) *exec.Cmd {
+func createCommand(argv []string, stdin io.Reader, stdout, stderr io.Writer) *exec.Cmd {
 	var cmd *exec.Cmd
 	if len(os.Args) == 2 {
 		cmd = exec.Command(os.Args[1])
 	} else {
 		cmd = exec.Command(os.Args[1], os.Args[2:]...)
 	}
+
+	cmd.Stdout = stdout
+	cmd.Stderr = stderr
+	cmd.Stdin = stdin
 
 	return cmd
 }
