@@ -2,7 +2,7 @@
 
 # Introduction
 
-ginit is a small signal proxy program that solves the "Docker pid 1" problem. It's written in Go and it's being tested at https://pimmr.com/ and in a Docker container near you.
+ginit is a small signal proxy program that solves the "Docker pid 1" problem. It's written in Go and it's being used at https://pimmr.com/ and in a Docker container near you.
 
 # Use in your Docker image
 
