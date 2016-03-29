@@ -1,5 +1,7 @@
 # Assets
 *.html
+dist/
+build/
 
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
