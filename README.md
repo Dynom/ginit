@@ -38,7 +38,7 @@ It's designed to support only one program (child) to launch. To call ginit a rea
 A thorough write-up can be found here: https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
 
 ## Is this the only solution?
-Far from it, many initiatives have been made to write a small signal-proxy-wrapper. Most of them contain more features and may do other things you're looking for. To name a few:
+Far from it. Many initiatives have been made to write a solution for the same problem. From full-blown init systems to small signal-proxy-wrappers, such as ginit. Most of them contain more features and might offer you something specific that you need: To name a few:
 
 * https://github.com/krallin/tini (language: C)
 * https://github.com/Yelp/dumb-init (language: C)
