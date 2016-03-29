@@ -13,7 +13,10 @@ ADD ginit /ginit
 CMD ["/ginit", "/bin/sleep", "3600"]
 ```
 
-# Building ginit
+# Obtaining ginit
+## Download it
+See the binaries on the release page: [Releases](releases)
+## Building ginit
 
 To produce a linux binary; Clone/download the repository and build it like so:
 
