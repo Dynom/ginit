@@ -15,7 +15,7 @@ CMD ["/ginit", "/bin/sleep", "3600"]
 
 # Obtaining ginit
 ## Download it
-See the binaries on the release page: [Releases](releases)
+See the binaries on the release page: [Releases](https://github.com/Dynom/ginit/releases)
 ## Building ginit
 
 To produce a linux binary; Clone/download the repository and build it like so:
