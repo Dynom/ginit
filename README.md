@@ -13,6 +13,42 @@ ADD ginit /ginit
 CMD ["/ginit", "/bin/sleep", "3600"]
 ```
 
+## Creating a Docker image with ginit
+
+A minimalistisc Dockerfile, including download verification, could be:
+
+```dockerfile
+FROM alpine:latest
+
+MAINTAINER mark@dynom.nl
+
+ENV GITHUB_DL_URL https://github.com/Dynom/ginit/releases/download/
+ENV GINIT_VERSION v0.1.0
+ENV BINARY_NAME ginit-${GINIT_VERSION}-linux-386.tar.gz
+ENV BINARY_URL ${GITHUB_DL_URL}/${GINIT_VERSION}/${BINARY_NAME}
+RUN apk update && apk upgrade && \
+    apk add --no-cache openssl && \
+    wget -q ${BINARY_URL} ${BINARY_URL}.sha512 && \
+    sha512sum -sc ${BINARY_NAME}.sha512 && \
+    tar zxf ${BINARY_NAME} -C / && \
+    apk del openssl && \
+    rm -rf /tmp/* /var/cache/apk/*
+
+ENTRYPOINT ["/ginit"]
+```
+building it:
+```sh
+$ docker build -t dynom/ginit:test .
+```
+
+And proving that it works:
+```sh
+$ docker run dynom/ginit:test ps aux
+PID   USER     TIME   COMMAND
+    1 root       0:00 /ginit ps aux
+   10 root       0:00 ps aux
+```
+
 # Obtaining ginit
 ## Download it
 See the binaries on the release page: [Releases](https://github.com/Dynom/ginit/releases)
