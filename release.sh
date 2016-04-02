@@ -19,7 +19,7 @@ go get github.com/mitchellh/gox
 rm -rf build dist && mkdir -p build dist
 
 # Build
-gox -ldflags "-w -X main.Version=${LATEST_TAG}" \
+gox -ldflags "-s -w -X main.Version=${LATEST_TAG}" \
     -os="darwin" \
     -os="linux" \
     -os="windows" \
