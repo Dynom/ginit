@@ -11,8 +11,8 @@ dependencies:
         - go get -u github.com/jgautheron/usedexports
 test:
     pre:
-        - find . -name \*.go | xargs go tool vet -all
-        - find . -name \*.go | xargs go tool vet --shadow
+        - go tool vet -all .
+        - go tool vet --shadow .
         - find . -name \*.go | xargs gofmt -l -s -d -e
         - find . -name \*.go | xargs gocyclo -over 10 
         - find . -type f -name "*.*" | grep -v '.git' | xargs misspell
