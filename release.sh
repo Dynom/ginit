@@ -31,10 +31,13 @@ HERE=$(pwd)
 BUILDDIR=${HERE}/build
 for DIR in $(ls build/);
 do
-    OUTFILE="${HERE}/dist/${DIR}.tar.gz"
+    OUTDIR="${HERE}/dist"
+    OUTFILENAME="${DIR}.tar.gz"
+    OUTFILE="${OUTDIR}/${OUTFILENAME}"
     cd ${BUILDDIR}/${DIR} && \
         tar -czf ${OUTFILE} * && \
-        shasum -a 512 ${OUTFILE} > ${OUTFILE}.sha512
+    cd ${OUTDIR} && \
+        shasum -a 512 ${OUTFILENAME} > ${OUTFILE}.sha512
 done
 cd ${HERE}
 
@@ -42,4 +45,4 @@ cd ${HERE}
 DIFF_REF=${LATEST_TAG}..HEAD
 CHANGELOG=$(printf '# %s\n%s' 'Changelog' "$(git log ${DIFF_REF} --oneline --no-merges --reverse)")
 
-github-release dynom/ginit ${LATEST_TAG} "$(git rev-parse --abbrev-ref HEAD)" "${CHANGELOG}" 'dist/*';
+github-release dynom/${NAME} ${LATEST_TAG} "$(git rev-parse --abbrev-ref HEAD)" "${CHANGELOG}" 'dist/*';
