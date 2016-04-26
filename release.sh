@@ -26,9 +26,20 @@ gox -ldflags "-s -w -X main.Version=${LATEST_TAG}" \
     -output "build/{{.Dir}}-${LATEST_TAG}-{{.OS}}-{{.Arch}}/${NAME}" \
     ./...
 
-# Archive
+# Compress the binaries
+UPX_BIN=$(which upx)
+if [ -f ${UPX_BIN} ];
+then
+    echo "Packing binaries"
+    find ./build -type f -exec upx -q9 {} \;
+else
+    echo "Not running UPX, can't find binary"
+fi
+
+# Archive the binaries
 HERE=$(pwd)
 BUILDDIR=${HERE}/build
+echo "Creating archives"
 for DIR in $(ls build/);
 do
     OUTDIR="${HERE}/dist"
@@ -45,4 +56,5 @@ cd ${HERE}
 DIFF_REF=${LATEST_TAG}..HEAD
 CHANGELOG=$(printf '# %s\n%s' 'Changelog' "$(git log ${DIFF_REF} --oneline --no-merges --reverse)")
 
+echo "Pushing the release ${LATEST_TAG} to Github"
 github-release dynom/${NAME} ${LATEST_TAG} "$(git rev-parse --abbrev-ref HEAD)" "${CHANGELOG}" 'dist/*';
