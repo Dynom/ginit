@@ -4,7 +4,7 @@
 
 ginit is a small signal proxy program that solves the "Docker pid 1" problem. It's written in Go and it's being used at https://pimmr.com/ and in a Docker container near you.
 
-# Use in your Docker image
+# Usage
 
 Make sure that ginit is available on your image and change your CMD command to have ginit as it's first argument.
 
@@ -50,9 +50,9 @@ PID   USER     TIME   COMMAND
 ```
 
 # Obtaining ginit
-## Download it
-See the binaries on the release page: [Releases](https://github.com/Dynom/ginit/releases)
-## Building ginit
+## Releases
+You can download pre-build binaries on the release page: [Releases](https://github.com/Dynom/ginit/releases)
+## From source
 
 To produce a linux binary; Clone/download the repository and build it like so:
 
@@ -64,10 +64,13 @@ It should work fine on most linux distributions, but it's thoroughly tested and 
 
 # More information
 
+## Dependencies
+None really.
+
 ## When should I use it?
 Whenever you run a single application (not deamon) within a Docker container, which is typically so when you follow the [12 factor application design approach](http://12factor.net/). Applications that spawn daemons, like Postgresql for example, have mechanisms to handle the child-process reaping problems themselves.
 
-## What does ginit support?
+## Limitations
 It's designed to support only one program (child) to launch. To call ginit a real init replacement system is therefor stretching it's  definition.
 
 ## The Docker pid 1 problem?
