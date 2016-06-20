@@ -70,6 +70,8 @@ None really.
 ## When should I use it?
 Whenever you run a single application (not deamon) within a Docker container, which is typically so when you follow the [12 factor application design approach](http://12factor.net/). Applications that spawn daemons, like Postgresql for example, have mechanisms to handle the child-process reaping problems themselves.
 
+So when you need to wait a long (>=5 seconds) time before your container process stops (using Docker compose or systemd style unit scripts), it can be due to the fact that your program doesn't correctly receive the SIGTERM/SIGINT signal. Ginit solves that for you.
+
 ## Limitations
 It's designed to support only one program (child) to launch. To call ginit a real init replacement system is therefor stretching it's  definition.
 
