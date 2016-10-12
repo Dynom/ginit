@@ -26,16 +26,6 @@ gox -ldflags "-s -w -X main.Version=${LATEST_TAG}" \
     -output "build/{{.Dir}}-${LATEST_TAG}-{{.OS}}-{{.Arch}}/${NAME}" \
     ./...
 
-# Compress the binaries
-UPX_BIN=$(which upx)
-if [ -f ${UPX_BIN} ];
-then
-    echo "Packing binaries"
-    find ./build -type f -exec upx -q9 {} \;
-else
-    echo "Not running UPX, can't find binary"
-fi
-
 # Archive the binaries
 HERE=$(pwd)
 BUILDDIR=${HERE}/build
