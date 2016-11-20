@@ -20,9 +20,12 @@ rm -rf build dist && mkdir -p build dist
 
 # Build
 gox -ldflags "-s -w -X main.Version=${LATEST_TAG}" \
-    -os="darwin" \
-    -os="linux" \
-    -os="windows" \
+    -osarch="darwin/386" \
+    -osarch="darwin/amd64" \
+    -osarch="linux/386" \
+    -osarch="linux/amd64" \
+    -osarch="windows/386" \
+    -osarch="windows/amd64" \
     -output "build/{{.Dir}}-${LATEST_TAG}-{{.OS}}-{{.Arch}}/${NAME}" \
     ./...
 
