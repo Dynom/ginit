@@ -1,27 +1,12 @@
 dependencies:
     pre:
-        - go get -u github.com/fzipp/gocyclo
-        - go get -u github.com/client9/misspell/cmd/misspell
-        - go get -u github.com/golang/lint/golint
-        - go get -u github.com/mibk/dupl
-        - go get -u github.com/kisielk/errcheck
-        - go get -u github.com/mvdan/interfacer/cmd/interfacer
-        - go get -u github.com/mdempsky/unconvert
-        - go get -u github.com/jgautheron/goconst/cmd/goconst
-        - go get -u github.com/jgautheron/usedexports
+        # Temporary, using Go 1.7
+        - curl -O https://storage.googleapis.com/golang/go1.7.3.linux-amd64.tar.gz && tar -xvf go1.7.3.linux-amd64.tar.gz && sudo bash -c 'rm -rf /usr/local/go && mv go /usr/local'
+        - go get -u github.com/alecthomas/gometalinter && gometalinter -i
+        # Nuking outdated caches that might give problems between language updates
+        # see https://github.com/golang/go/issues/12703
+        - rm -rf /home/ubuntu/{.go_workspace,.go_project}/pkg/*
 test:
     pre:
-        - go tool vet -all .
-        - go tool vet --shadow .
-        - find . -name \*.go | xargs gofmt -l -s -d -e
-        - find . -name \*.go | xargs gocyclo -over 10 
-        - find . -type f -name "*.*" | grep -v '.git' | xargs misspell
-        - golint ./...
-        - find . -name "*.go" -not -name "*_test*" | dupl -files -v -t 50
-        - find . -type d | grep -v '.git' | xargs errcheck -asserts -blank -verbose
-        - find . -type d | grep -v '.git' | xargs interfacer -v
-        - find . -type d | grep -v '.git' | xargs unconvert -v -safe
-        - goconst ./...
-        - usedexports ./...
-
-
+        - go version
+        - gometalinter --vendored-linters -t --enable-gc --vendor --cyclo-over=10 --deadline=5m -e "Subprocess launching with variable" ./...
