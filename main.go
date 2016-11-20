@@ -30,8 +30,7 @@ func main() {
 
 	cmd := createCommand(os.Args, os.Stdin, os.Stdout, os.Stderr)
 
-	err := cmd.Start()
-	if err != nil {
+	if err := cmd.Start(); err != nil {
 		printf("Couldn't start command: %s", err)
 		os.Exit(-2)
 	}
@@ -40,15 +39,13 @@ func main() {
 		sig := <-sigs
 
 		debugf("Sending signal '%s' to our child process", sig)
-		err := cmd.Process.Signal(sig)
-		if err != nil {
+		if err := cmd.Process.Signal(sig); err != nil {
 			printf("Unable to send signal '%s' to our child process: %s", sig, err)
 		}
 	}()
 
 	debugf("Command started with pid %d.", cmd.Process.Pid)
-	err = cmd.Wait()
-	debugf("Command finished: %s", err)
+	debugf("Command finished: %s", cmd.Wait())
 
 	debugf("Exiting ginit")
 	os.Exit(0)
@@ -64,10 +61,10 @@ func registerSignals(sigs chan<- os.Signal) {
 
 func createCommand(argv []string, stdin io.Reader, stdout, stderr io.Writer) *exec.Cmd {
 	var cmd *exec.Cmd
-	if len(os.Args) == 2 {
-		cmd = exec.Command(os.Args[1])
+	if len(argv) == 2 {
+		cmd = exec.Command(argv[1])
 	} else {
-		cmd = exec.Command(os.Args[1], os.Args[2:]...)
+		cmd = exec.Command(argv[1], argv[2:]...)
 	}
 
 	cmd.Stdout = stdout
