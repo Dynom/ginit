@@ -2,7 +2,9 @@
 
 # Introduction
 
-ginit is a small signal proxy program that solves the "Docker pid 1" problem. It's written in Go and it's being used at https://pimmr.com/ and in a Docker container near you.
+As of Docker 1.13.0 (released on: 2017-01-18) this is no longer needed and can be enabled with the `--init` flag that will use https://github.com/krallin/tini as init process. See: https://github.com/docker/docker/blob/master/CHANGELOG.md#1130-2017-01-18. If you still use ginit and get an error message like: `some_container exited with code 133`, the problem is likely your init handler.
+
+ginit is a small signal proxy program that solved the "Docker pid 1" problem. It's written in Go and it's being used at https://pimmr.com/ and in a Docker container near you.
 
 # Usage
 
